@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>grupo_1_e_3 &mdash; A1_LP - Bruno Mars 1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> A1_LP - Bruno Mars
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../pags/create_dataframe.html">create_dataframe module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/get_lyrics.html">get_lyrics module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/grupo_1_e_3.html">grupo_1_e_3 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/grupo_2.html">grupo_2 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/main.html">main module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">A1_LP - Bruno Mars</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      <li>grupo_1_e_3</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for grupo_1_e_3</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+
+<div class="viewcode-block" id="plot_mais_e_menos_por_album"><a class="viewcode-back" href="../pags/grupo_1_e_3.html#grupo_1_e_3.plot_mais_e_menos_por_album">[docs]</a><span class="k">def</span> <span class="nf">plot_mais_e_menos_por_album</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">coluna</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Responde as perguntas do tipo: mostre o maior e menor com &quot;tal&quot; característica POR ÁLBUM.</span>
+<span class="sd">    </span>
+<span class="sd">    :param df: dataframe com todas as informações das músicas.</span>
+<span class="sd">    :param coluna: nome das coluna requisitadas para obter informações.</span>
+<span class="sd">    :type df: object</span>
+<span class="sd">    :type coluna: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Criando um dicionario em que a chave é o nome do álbum e o valor é uma lista com as musicas dele.</span>
+    <span class="c1"># Isso irá ajudar para plotar um gráfico por álbum</span>
+    <span class="n">tuples</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">dict_albuns</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tuples</span><span class="p">:</span>
+        <span class="n">dict_albuns</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="c1">#plotando os gráficos para cada álbum</span>
+    <span class="k">for</span> <span class="n">album</span><span class="p">,</span> <span class="n">musicas</span> <span class="ow">in</span> <span class="n">dict_albuns</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">custom_palette</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">max_album</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">album</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()[</span><span class="n">coluna</span><span class="p">]</span>
+        <span class="n">min_album</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">album</span><span class="p">]</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()[</span><span class="n">coluna</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;O máximo em </span><span class="si">{</span><span class="n">coluna</span><span class="si">}</span><span class="s1"> no álbum </span><span class="si">{</span><span class="n">album</span><span class="si">}</span><span class="s1"> é </span><span class="si">{</span><span class="n">max_album</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;O mínimo em </span><span class="si">{</span><span class="n">coluna</span><span class="si">}</span><span class="s1"> no álbum </span><span class="si">{</span><span class="n">album</span><span class="si">}</span><span class="s1"> é </span><span class="si">{</span><span class="n">min_album</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">musica</span> <span class="ow">in</span> <span class="n">musicas</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">musica</span> <span class="o">==</span> <span class="n">min_album</span> <span class="ow">or</span> <span class="n">musica</span> <span class="o">==</span> <span class="n">max_album</span><span class="p">:</span>
+                <span class="n">custom_palette</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;#25316D&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">custom_palette</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;#97D2EC&#39;</span><span class="p">)</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span> <span class="o">=</span> <span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">musicas</span><span class="p">),</span> <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">album</span><span class="p">,</span> <span class="n">coluna</span><span class="p">],</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">custom_palette</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">coluna</span><span class="si">}</span><span class="s1"> em: </span><span class="si">{</span><span class="n">album</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">coluna</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="plot_mais_e_menos_geral"><a class="viewcode-back" href="../pags/grupo_1_e_3.html#grupo_1_e_3.plot_mais_e_menos_geral">[docs]</a><span class="k">def</span> <span class="nf">plot_mais_e_menos_geral</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">coluna</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Responde as perguntas do tipo: mostre o maior e menor com &quot;tal&quot; característica EM TODA DISCOGRAFIA.</span>
+<span class="sd">    </span>
+<span class="sd">    :param df: dataframe com todas as informações das músicas.</span>
+<span class="sd">    :param coluna: nome da coluna requisitada para obter informações.</span>
+<span class="sd">    :type df: object</span>
+<span class="sd">    :type coluna: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">custom_palette</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">musicas</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">maximo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()[</span><span class="n">coluna</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">minimo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()[</span><span class="n">coluna</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;O máximo em </span><span class="si">{</span><span class="n">coluna</span><span class="si">}</span><span class="s1"> em toda discografia é </span><span class="si">{</span><span class="n">maximo</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;O mínimo em </span><span class="si">{</span><span class="n">coluna</span><span class="si">}</span><span class="s1"> em toda discografia é </span><span class="si">{</span><span class="n">minimo</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+        <span class="n">musicas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">maximo</span> <span class="ow">or</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">minimo</span><span class="p">:</span>
+            <span class="n">custom_palette</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;#3CCF4E&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">custom_palette</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;#ADDDD0&#39;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span> <span class="o">=</span> <span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">musicas</span><span class="p">),</span> <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">coluna</span><span class="p">],</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">custom_palette</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">coluna</span><span class="si">}</span><span class="s1"> em: toda discografia&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">coluna</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="plot_premiados"><a class="viewcode-back" href="../pags/grupo_1_e_3.html#grupo_1_e_3.plot_premiados">[docs]</a><span class="k">def</span> <span class="nf">plot_premiados</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mostra o número de premiações por álbum (Foram considerados o somatório dos prêmios de cada música de um álbum como premiação total do álbum. Os dados para número de prêmios por músicas foram coletados manualmente)</span>
+<span class="sd">    </span>
+<span class="sd">    :param df: dataframe com todas as informações das músicas.</span>
+<span class="sd">    :type df: object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">tuples</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">dict_albuns</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">albuns</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">premios</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tuples</span><span class="p">:</span>
+        <span class="n">dict_albuns</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">13</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">album</span> <span class="ow">in</span> <span class="n">dict_albuns</span><span class="p">:</span> 
+        <span class="n">albuns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">album</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">dict_albuns</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">premios</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span> <span class="o">=</span> <span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">albuns</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">premios</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Prêmios por álbuns&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Prêmios&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">albuns</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">premios</span><span class="p">:</span>
+            <span class="n">res</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="n">premios</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">break</span>  
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;O álbum com mais prêmios é: &quot;</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;O álbum com menos prêmios é: &quot;</span><span class="p">,</span><span class="nb">min</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="plot_correlacao"><a class="viewcode-back" href="../pags/grupo_1_e_3.html#grupo_1_e_3.plot_correlacao">[docs]</a><span class="k">def</span> <span class="nf">plot_correlacao</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">tupla</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mostra a correlação entre duas colunas escolhidas.</span>
+<span class="sd">    </span>
+<span class="sd">    :param df: dataframe com todas as informações das músicas.</span>
+<span class="sd">    :param tupla: nomes das colunas requisitadas para obter informações.</span>
+<span class="sd">    :type df: object</span>
+<span class="sd">    :type coluna: tuple(str)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">tupla</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">tupla</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">tupla</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">df</span><span class="p">[</span><span class="n">tupla</span><span class="p">[</span><span class="mi">1</span><span class="p">]])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">tupla</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">df</span><span class="p">[</span><span class="n">tupla</span><span class="p">[</span><span class="mi">1</span><span class="p">]])[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;R=</span><span class="si">{:f}</span><span class="s1">, p-value=</span><span class="si">{:f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">p</span><span class="p">)])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="plot_tom_mais_frequente"><a class="viewcode-back" href="../pags/grupo_1_e_3.html#grupo_1_e_3.plot_tom_mais_frequente">[docs]</a><span class="k">def</span> <span class="nf">plot_tom_mais_frequente</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Responde quais são os tons mais frequentes da música (baseados em Pitch class)</span>
+<span class="sd">    </span>
+<span class="sd">    :param df: dataframe com todas as informações das músicas.</span>
+<span class="sd">    :type df: object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+    <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">k</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">custom_palette</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">max_value</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">counts</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+    <span class="n">min_value</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">counts</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;O tom mais frequente é: &quot;</span><span class="p">,</span> <span class="n">max_value</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;O tom menos frequente é: &quot;</span><span class="p">,</span> <span class="n">min_value</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">max_value</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="n">min_value</span><span class="p">:</span>
+            <span class="n">custom_palette</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;#820000&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">custom_palette</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;#FF9494&quot;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span> <span class="o">=</span> <span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">k</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">v</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">custom_palette</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Frequência dos tons&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequência&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Tons&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, João Victor Pereira Oliveira &amp; Rafael Felipe dos Santos.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

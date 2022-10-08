@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>create_dataframe &mdash; A1_LP - Bruno Mars 1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> A1_LP - Bruno Mars
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../pags/create_dataframe.html">create_dataframe module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/get_lyrics.html">get_lyrics module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/grupo_1_e_3.html">grupo_1_e_3 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/grupo_2.html">grupo_2 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/main.html">main module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">A1_LP - Bruno Mars</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      <li>create_dataframe</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for create_dataframe</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">spotipy.oauth2</span> <span class="kn">import</span> <span class="n">SpotifyClientCredentials</span>
+<span class="kn">import</span> <span class="nn">spotipy</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="c1"># este é o meu token de acesso para poder utilizar a api do spotify</span>
+<span class="n">spot</span> <span class="o">=</span> <span class="n">spotipy</span><span class="o">.</span><span class="n">Spotify</span><span class="p">(</span><span class="n">client_credentials_manager</span> <span class="o">=</span> <span class="n">SpotifyClientCredentials</span><span class="p">(</span><span class="n">client_id</span><span class="o">=</span><span class="s2">&quot;4122b8a894694d3e8cf1d8a19cf93aec&quot;</span><span class="p">,</span> <span class="n">client_secret</span><span class="o">=</span><span class="s2">&quot;665e23d198b1458f8a4ce02303100b3d&quot;</span><span class="p">))</span>
+
+<span class="c1"># no spotify, cada artista tem uma id para poder reconhecê-lo no sistema. </span>
+<span class="n">artist_id</span> <span class="o">=</span> <span class="s1">&#39;0du5cEVh5yTK9QJze8zA0C&#39;</span> <span class="c1">#id do Bruno Mars</span>
+
+
+<div class="viewcode-block" id="get_all_albuns"><a class="viewcode-back" href="../pags/create_dataframe.html#create_dataframe.get_all_albuns">[docs]</a><span class="k">def</span> <span class="nf">get_all_albuns</span><span class="p">(</span><span class="n">id_artista</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Cria uma relação entre a id e nome de cada álbum do artista.</span>
+
+<span class="sd">    :param id_artist: id do artista escolhido.</span>
+<span class="sd">    :type id_artist: str</span>
+<span class="sd">    :return: um dicionário com a id do album e o nome dele para cada album do artista</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">albuns_do_artista</span> <span class="o">=</span> <span class="n">spot</span><span class="o">.</span><span class="n">artist_albums</span><span class="p">(</span><span class="n">id_artista</span><span class="p">,</span> <span class="n">album_type</span><span class="o">=</span><span class="s1">&#39;album&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">spotipy</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">SpotifyException</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">error</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">albuns</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">albuns_do_artista</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">])):</span>
+            <span class="nb">id</span> <span class="o">=</span> <span class="n">albuns_do_artista</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">albuns_do_artista</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+            <span class="n">albuns</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">return</span> <span class="n">albuns</span></div>
+
+
+<div class="viewcode-block" id="get_album_data"><a class="viewcode-back" href="../pags/create_dataframe.html#create_dataframe.get_album_data">[docs]</a><span class="k">def</span> <span class="nf">get_album_data</span><span class="p">(</span><span class="n">album_id</span><span class="p">,</span> <span class="n">album_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Cria um dataframe com informações consideradas relevantes sobre cada música de um álbum específico.</span>
+<span class="sd">    </span>
+<span class="sd">    :param album_id: id do álbum escolhido.</span>
+<span class="sd">    :param album_name: nome do álbum escolhido.</span>
+<span class="sd">    :type album_id: str</span>
+<span class="sd">    :type album_name: str</span>
+<span class="sd">    :return: um dataframe com multi-index de álbum e nome das músicas, em que as colunas são informações consideradas relevantes sobre cada música.</span>
+<span class="sd">    :rtype: object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">tuple_index</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">tracks</span> <span class="o">=</span> <span class="n">spot</span><span class="o">.</span><span class="n">album_tracks</span><span class="p">(</span><span class="n">album_id</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tracks</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">])):</span>
+            <span class="n">id_track</span> <span class="o">=</span> <span class="n">tracks</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">][</span><span class="n">n</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+            <span class="n">track</span> <span class="o">=</span> <span class="n">spot</span><span class="o">.</span><span class="n">track</span><span class="p">(</span><span class="n">id_track</span><span class="p">)</span>
+            <span class="n">audio_features</span> <span class="o">=</span> <span class="n">spot</span><span class="o">.</span><span class="n">audio_features</span><span class="p">(</span><span class="n">id_track</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1">#construindo o data frame</span>
+            <span class="n">tuple_index</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">album_name</span><span class="p">,</span> <span class="n">track</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]))</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="s1">&#39;duration_ms&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="n">track</span><span class="p">[</span><span class="s1">&#39;popularity&#39;</span><span class="p">],</span> <span class="n">audio_features</span><span class="p">[</span><span class="s1">&#39;danceability&#39;</span><span class="p">],</span> <span class="n">audio_features</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">],</span> <span class="n">audio_features</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">],</span>
+            <span class="n">audio_features</span><span class="p">[</span><span class="s1">&#39;loudness&#39;</span><span class="p">],</span> <span class="n">audio_features</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">],</span> <span class="n">audio_features</span><span class="p">[</span><span class="s1">&#39;speechiness&#39;</span><span class="p">],</span> <span class="n">audio_features</span><span class="p">[</span><span class="s1">&#39;acousticness&#39;</span><span class="p">],</span><span class="n">audio_features</span><span class="p">[</span><span class="s1">&#39;instrumentalness&#39;</span><span class="p">],</span> 
+            <span class="n">audio_features</span><span class="p">[</span><span class="s1">&#39;liveness&#39;</span><span class="p">],</span> <span class="n">audio_features</span><span class="p">[</span><span class="s1">&#39;valence&#39;</span><span class="p">],</span> <span class="n">audio_features</span><span class="p">[</span><span class="s1">&#39;tempo&#39;</span><span class="p">]])</span>
+        
+        <span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">(</span><span class="n">tuple_index</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Albuns&quot;</span><span class="p">,</span> <span class="s2">&quot;Musics&quot;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;duration (sec)&#39;</span><span class="p">,</span><span class="s1">&#39;popularity&#39;</span><span class="p">,</span> <span class="s1">&#39;danceability&#39;</span><span class="p">,</span> <span class="s1">&#39;energy&#39;</span><span class="p">,</span> <span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="s1">&#39;loudness&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;mode&#39;</span><span class="p">,</span> <span class="s1">&#39;speechiness&#39;</span><span class="p">,</span> <span class="s1">&#39;acousticness&#39;</span><span class="p">,</span> <span class="s1">&#39;instrumentalness&#39;</span><span class="p">,</span> <span class="s1">&#39;liveness&#39;</span><span class="p">,</span> <span class="s1">&#39;valence&#39;</span><span class="p">,</span> <span class="s1">&#39;tempo&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">error</span></div>
+
+
+<div class="viewcode-block" id="create_dataframe"><a class="viewcode-back" href="../pags/create_dataframe.html#create_dataframe.create_dataframe">[docs]</a><span class="k">def</span> <span class="nf">create_dataframe</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Cria um dataframe com informações consideradas relevantes para todas as músicas do artista</span>
+<span class="sd">    </span>
+<span class="sd">    :param None:</span>
+<span class="sd">    :return: um dataframe com multi-index de álbuns e nome das músicas, em que as colunas são informações consideradas relevantes sobre cada música.</span>
+<span class="sd">    :rtype: object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">albuns</span> <span class="o">=</span> <span class="n">get_all_albuns</span><span class="p">(</span><span class="n">artist_id</span><span class="p">)</span>
+        <span class="n">dfs</span> <span class="o">=</span><span class="p">{}</span>
+        <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">nome</span> <span class="ow">in</span> <span class="n">albuns</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">dfs</span><span class="p">[</span><span class="n">nome</span><span class="p">]</span><span class="o">=</span> <span class="n">get_album_data</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">nome</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="c1">#tirando essa delux edition para nao ter músicas repetidas</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Unorthodox Jukebox (Deluxe Edition)&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">remove_unused_levels</span><span class="p">()</span>
+
+        <span class="c1">#adicionando a coluna prêmios pos música.Como são poucos prêmios, pegamos manualmente</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;prêmios&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="c1">#df.to_csv(r&#39;dataframe.csv&#39;)</span>
+        <span class="k">return</span> <span class="n">df</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">error</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, João Victor Pereira Oliveira &amp; Rafael Felipe dos Santos.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>grupo_2 module &mdash; A1_LP - Bruno Mars 1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="main module" href="main.html" />
+    <link rel="prev" title="grupo_1_e_3 module" href="grupo_1_e_3.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> A1_LP - Bruno Mars
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="create_dataframe.html">create_dataframe module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_lyrics.html">get_lyrics module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grupo_1_e_3.html">grupo_1_e_3 module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">grupo_2 module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#grupo_2.count_freq"><code class="docutils literal notranslate"><span class="pre">count_freq()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grupo_2.frequencia_dos_titulos_das_musicas"><code class="docutils literal notranslate"><span class="pre">frequencia_dos_titulos_das_musicas()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grupo_2.frequencia_dos_titulos_dos_albuns"><code class="docutils literal notranslate"><span class="pre">frequencia_dos_titulos_dos_albuns()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grupo_2.palavras_comuns"><code class="docutils literal notranslate"><span class="pre">palavras_comuns()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grupo_2.palavras_comuns_albuns"><code class="docutils literal notranslate"><span class="pre">palavras_comuns_albuns()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grupo_2.palavras_comuns_discografia"><code class="docutils literal notranslate"><span class="pre">palavras_comuns_discografia()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grupo_2.titulo_albuns_nas_letras"><code class="docutils literal notranslate"><span class="pre">titulo_albuns_nas_letras()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grupo_2.titulo_musica_na_letra"><code class="docutils literal notranslate"><span class="pre">titulo_musica_na_letra()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">main module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">A1_LP - Bruno Mars</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>grupo_2 module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/pags/grupo_2.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-grupo_2">
+<span id="grupo-2-module"></span><h1>grupo_2 module<a class="headerlink" href="#module-grupo_2" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="grupo_2.count_freq">
+<span class="sig-prename descclassname"><span class="pre">grupo_2.</span></span><span class="sig-name descname"><span class="pre">count_freq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lista</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/grupo_2.html#count_freq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grupo_2.count_freq" title="Permalink to this definition"></a></dt>
+<dd><p>Essa função nos da a frequência das palavras em uma determinada lista.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>lista</strong> (<em>list</em>) – lista com strings.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>um pd.Series com a frequência de cada palavra da lista.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grupo_2.frequencia_dos_titulos_das_musicas">
+<span class="sig-prename descclassname"><span class="pre">grupo_2.</span></span><span class="sig-name descname"><span class="pre">frequencia_dos_titulos_das_musicas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/grupo_2.html#frequencia_dos_titulos_das_musicas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grupo_2.frequencia_dos_titulos_das_musicas" title="Permalink to this definition"></a></dt>
+<dd><p>Essa função responde quais são as palavras mais comuns nos títulos das músicas e plota as tag clous.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>object</em>) – dataframe com todas as informações das músicas.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grupo_2.frequencia_dos_titulos_dos_albuns">
+<span class="sig-prename descclassname"><span class="pre">grupo_2.</span></span><span class="sig-name descname"><span class="pre">frequencia_dos_titulos_dos_albuns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/grupo_2.html#frequencia_dos_titulos_dos_albuns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grupo_2.frequencia_dos_titulos_dos_albuns" title="Permalink to this definition"></a></dt>
+<dd><p>Essa função responde quais são as palavras mais comuns nos títulos dos álbuns e plota as tag lous.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>object</em>) – dataframe com todas as informações das músicas.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grupo_2.palavras_comuns">
+<span class="sig-prename descclassname"><span class="pre">grupo_2.</span></span><span class="sig-name descname"><span class="pre">palavras_comuns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">album</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/grupo_2.html#palavras_comuns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grupo_2.palavras_comuns" title="Permalink to this definition"></a></dt>
+<dd><p>Essa função nos da a frequência de palavras nas músicas do álbum passado como argumento.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>album</strong> (<em>str</em>) – nome do álbum escolhido.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>um pd.Series com a frequência de cada palavra que aparece nas músicas de um álbum específico</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grupo_2.palavras_comuns_albuns">
+<span class="sig-prename descclassname"><span class="pre">grupo_2.</span></span><span class="sig-name descname"><span class="pre">palavras_comuns_albuns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lista_albuns</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/grupo_2.html#palavras_comuns_albuns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grupo_2.palavras_comuns_albuns" title="Permalink to this definition"></a></dt>
+<dd><p>Responde quais as palavras mais frequentes nas letras das músicas por álbum e plota a tag cloud de CADA ÁLBUM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>lista_albuns</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – lista com os nomes dos álbuns a serem analisados.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grupo_2.palavras_comuns_discografia">
+<span class="sig-prename descclassname"><span class="pre">grupo_2.</span></span><span class="sig-name descname"><span class="pre">palavras_comuns_discografia</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lista_albuns</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/grupo_2.html#palavras_comuns_discografia"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grupo_2.palavras_comuns_discografia" title="Permalink to this definition"></a></dt>
+<dd><p>Responde quais as palavras mais frequentes nas letras das músicas, considerando TODA A DISCOGRAFIA, e plota a tag cloud</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>lista_albuns</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – lista com os nomes dos álbuns a serem analisados.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grupo_2.titulo_albuns_nas_letras">
+<span class="sig-prename descclassname"><span class="pre">grupo_2.</span></span><span class="sig-name descname"><span class="pre">titulo_albuns_nas_letras</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albuns</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/grupo_2.html#titulo_albuns_nas_letras"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grupo_2.titulo_albuns_nas_letras" title="Permalink to this definition"></a></dt>
+<dd><p>A função plota um gráfico de barras que mostra o número de vezes que o nome do álbum aparece nas músicas dele. Contabilizamos uma ocorrência para cada palavra-chave que está presente em uma música (palavra-chave seria uma palavra que não está na lista padrão das stopwords da biblioteca NLTK).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>albuns</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – lista com os nomes dos álbuns a serem analisados.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grupo_2.titulo_musica_na_letra">
+<span class="sig-prename descclassname"><span class="pre">grupo_2.</span></span><span class="sig-name descname"><span class="pre">titulo_musica_na_letra</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/grupo_2.html#titulo_musica_na_letra"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grupo_2.titulo_musica_na_letra" title="Permalink to this definition"></a></dt>
+<dd><p>A função plota um gráfico de barras que mostra o número de vezes que o título da música aparece na sua letra. Contabilizamos uma ocorrência para cada palavra-chave que está presente em uma música (palavra-chave seria uma palavra que não está na lista padrão das stopwords da biblioteca NLTK).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="grupo_1_e_3.html" class="btn btn-neutral float-left" title="grupo_1_e_3 module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="main.html" class="btn btn-neutral float-right" title="main module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, João Victor Pereira Oliveira &amp; Rafael Felipe dos Santos.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

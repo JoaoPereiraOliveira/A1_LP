@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>grupo_2 &mdash; A1_LP - Bruno Mars 1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> A1_LP - Bruno Mars
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../pags/create_dataframe.html">create_dataframe module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/get_lyrics.html">get_lyrics module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/grupo_1_e_3.html">grupo_1_e_3 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/grupo_2.html">grupo_2 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/main.html">main module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">A1_LP - Bruno Mars</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      <li>grupo_2</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for grupo_2</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;stopwords&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">mpatches</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+
+<div class="viewcode-block" id="count_freq"><a class="viewcode-back" href="../pags/grupo_2.html#grupo_2.count_freq">[docs]</a><span class="k">def</span> <span class="nf">count_freq</span><span class="p">(</span><span class="n">lista</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Essa função nos da a frequência das palavras em uma determinada lista.</span>
+
+<span class="sd">    :param lista: lista com strings.</span>
+<span class="sd">    :type lista: list</span>
+<span class="sd">    :return: um pd.Series com a frequência de cada palavra da lista.</span>
+<span class="sd">    :rtype: object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">lista</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">subn</span><span class="p">(</span><span class="s1">&#39;[(,),&amp;,!,:,?]&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span><span class="c1">#re.subn devolve uma tupla, oq impede o uso do replace</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s2">&quot; &quot;</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">palavra</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+                    <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">palavra</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">freq</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+
+        <span class="c1">#tirando stopwords</span>
+        <span class="n">stops</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">palavra</span><span class="p">,</span> <span class="n">repeticoes</span> <span class="ow">in</span> <span class="n">freq</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">palavra</span> <span class="ow">in</span> <span class="n">stops</span><span class="p">:</span>
+                <span class="n">freq</span> <span class="o">=</span> <span class="n">freq</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">palavra</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">freq</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">error</span></div>
+
+
+<span class="c1"># Quais são as palavras mais comuns nos títulos dos Álbuns?</span>
+<div class="viewcode-block" id="frequencia_dos_titulos_dos_albuns"><a class="viewcode-back" href="../pags/grupo_2.html#grupo_2.frequencia_dos_titulos_dos_albuns">[docs]</a><span class="k">def</span> <span class="nf">frequencia_dos_titulos_dos_albuns</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Essa função responde quais são as palavras mais comuns nos títulos dos álbuns e plota as tag lous.</span>
+<span class="sd">    </span>
+<span class="sd">    :param df: dataframe com todas as informações das músicas.</span>
+<span class="sd">    :type df: object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">count_freq</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">levels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">wordcloud</span> <span class="o">=</span> <span class="n">WordCloud</span><span class="p">(</span><span class="n">background_color</span><span class="o">=</span><span class="s2">&quot;#1B2430&quot;</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">)</span>
+    <span class="n">wordcloud</span><span class="o">.</span><span class="n">generate_from_frequencies</span><span class="p">(</span><span class="n">frequencies</span><span class="o">=</span><span class="n">count_freq</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">levels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">wordcloud</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;bilinear&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Palavras mais comuns nos títulos dos álbuns&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<span class="c1"># Quais são as palavras mais comuns nos títulos das músicas?</span>
+<div class="viewcode-block" id="frequencia_dos_titulos_das_musicas"><a class="viewcode-back" href="../pags/grupo_2.html#grupo_2.frequencia_dos_titulos_das_musicas">[docs]</a><span class="k">def</span> <span class="nf">frequencia_dos_titulos_das_musicas</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Essa função responde quais são as palavras mais comuns nos títulos das músicas e plota as tag clous.</span>
+<span class="sd">    </span>
+<span class="sd">    :param df: dataframe com todas as informações das músicas.</span>
+<span class="sd">    :type df: object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="n">count_freq</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">levels</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">wordcloud</span> <span class="o">=</span> <span class="n">WordCloud</span><span class="p">(</span><span class="n">background_color</span><span class="o">=</span><span class="s2">&quot;#0F0E0E&quot;</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="s1">&#39;GnBu&#39;</span><span class="p">)</span>
+    <span class="n">wordcloud</span><span class="o">.</span><span class="n">generate_from_frequencies</span><span class="p">(</span><span class="n">frequencies</span><span class="o">=</span><span class="n">count_freq</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">levels</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">wordcloud</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;bilinear&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Palavras mais comuns nos títulos das músicas&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="palavras_comuns"><a class="viewcode-back" href="../pags/grupo_2.html#grupo_2.palavras_comuns">[docs]</a><span class="k">def</span> <span class="nf">palavras_comuns</span><span class="p">(</span><span class="n">album</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Essa função nos da a frequência de palavras nas músicas do álbum passado como argumento.</span>
+
+<span class="sd">    :param album: nome do álbum escolhido.</span>
+<span class="sd">    :type album: str</span>
+<span class="sd">    :return: um pd.Series com a frequência de cada palavra que aparece nas músicas de um álbum específico</span>
+<span class="sd">    :rtype: object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">freq</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;musicas.json&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">all_musics</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">dicionario</span> <span class="ow">in</span> <span class="n">all_musics</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">dicionario</span><span class="p">[</span><span class="s1">&#39;album&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">album</span><span class="p">:</span>
+                    <span class="n">freq</span> <span class="o">=</span> <span class="n">freq</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">count_freq</span><span class="p">([</span><span class="n">dicionario</span><span class="p">[</span><span class="s1">&#39;letra&#39;</span><span class="p">]]),</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">freq</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">error</span></div>
+
+
+<span class="c1"># Quais são as palavras mais comuns nas letras das músicas, por Álbum?</span>
+<div class="viewcode-block" id="palavras_comuns_albuns"><a class="viewcode-back" href="../pags/grupo_2.html#grupo_2.palavras_comuns_albuns">[docs]</a><span class="k">def</span> <span class="nf">palavras_comuns_albuns</span><span class="p">(</span><span class="n">lista_albuns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Responde quais as palavras mais frequentes nas letras das músicas por álbum e plota a tag cloud de CADA ÁLBUM.</span>
+
+<span class="sd">    :param lista_albuns: lista com os nomes dos álbuns a serem analisados.</span>
+<span class="sd">    :type lista_albuns: list[str]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">for</span> <span class="n">album</span> <span class="ow">in</span> <span class="n">lista_albuns</span><span class="p">:</span>
+        <span class="n">serie</span> <span class="o">=</span> <span class="n">palavras_comuns</span><span class="p">(</span><span class="n">album</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Palavras mais frequentes em: </span><span class="si">{</span><span class="n">album</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">serie</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">wordcloud</span> <span class="o">=</span> <span class="n">WordCloud</span><span class="p">(</span><span class="n">colormap</span><span class="o">=</span><span class="s1">&#39;Dark2&#39;</span><span class="p">)</span>
+        <span class="n">wordcloud</span><span class="o">.</span><span class="n">generate_from_frequencies</span><span class="p">(</span><span class="n">frequencies</span><span class="o">=</span><span class="n">serie</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">wordcloud</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;bilinear&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Palavras mais frequentes em: </span><span class="si">{</span><span class="n">album</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<span class="c1"># Quais são as palavras mais comuns nas letras das músicas, em toda a discografia?</span>
+<div class="viewcode-block" id="palavras_comuns_discografia"><a class="viewcode-back" href="../pags/grupo_2.html#grupo_2.palavras_comuns_discografia">[docs]</a><span class="k">def</span> <span class="nf">palavras_comuns_discografia</span><span class="p">(</span><span class="n">lista_albuns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Responde quais as palavras mais frequentes nas letras das músicas, considerando TODA A DISCOGRAFIA, e plota a tag cloud</span>
+
+<span class="sd">    :param lista_albuns: lista com os nomes dos álbuns a serem analisados.</span>
+<span class="sd">    :type lista_albuns: list[str]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">freq_total</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">album</span> <span class="ow">in</span> <span class="n">lista_albuns</span><span class="p">:</span>
+        <span class="n">freq_total</span> <span class="o">=</span> <span class="n">freq_total</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">palavras_comuns</span><span class="p">(</span><span class="n">album</span><span class="p">),</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Palavras mais comuns nas letras das músicas em toda a discografia:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">freq_total</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="n">sep</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">wordcloud</span> <span class="o">=</span> <span class="n">WordCloud</span><span class="p">(</span><span class="n">background_color</span><span class="o">=</span><span class="s2">&quot;#0F0E0E&quot;</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="s1">&#39;PuRd_r&#39;</span><span class="p">)</span>
+    <span class="n">wordcloud</span><span class="o">.</span><span class="n">generate_from_frequencies</span><span class="p">(</span><span class="n">frequencies</span><span class="o">=</span><span class="n">freq_total</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">wordcloud</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;bilinear&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Palavras mais comuns nas letras das músicas em toda a discografia&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<span class="c1"># o titulo do album é tema recorrente nas letras?</span>
+<div class="viewcode-block" id="titulo_albuns_nas_letras"><a class="viewcode-back" href="../pags/grupo_2.html#grupo_2.titulo_albuns_nas_letras">[docs]</a><span class="k">def</span> <span class="nf">titulo_albuns_nas_letras</span><span class="p">(</span><span class="n">albuns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A função plota um gráfico de barras que mostra o número de vezes que o nome do álbum aparece nas músicas dele. Contabilizamos uma ocorrência para cada palavra-chave que está presente em uma música (palavra-chave seria uma palavra que não está na lista padrão das stopwords da biblioteca NLTK).</span>
+
+<span class="sd">    :param albuns: lista com os nomes dos álbuns a serem analisados.</span>
+<span class="sd">    :type albuns: list[str]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">ocorrencias</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">titulo</span> <span class="ow">in</span> <span class="n">albuns</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">titulo</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ocorrencias</span><span class="p">:</span>
+            <span class="n">ocorrencias</span><span class="p">[</span><span class="n">titulo</span><span class="p">]</span><span class="o">=</span> <span class="mi">0</span>
+        <span class="n">titulo_list</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;\(.*?\)&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">titulo</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&amp;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">stops</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">))</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="p">[</span><span class="n">palavra</span> <span class="k">for</span> <span class="n">palavra</span> <span class="ow">in</span> <span class="n">titulo_list</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">palavra</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">stops</span><span class="p">]</span>
+        <span class="n">freq</span> <span class="o">=</span> <span class="n">palavras_comuns</span><span class="p">(</span><span class="n">titulo</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">palavra</span> <span class="ow">in</span> <span class="n">filtered</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">ocorrencias</span><span class="p">[</span><span class="n">titulo</span><span class="p">]</span> <span class="o">+=</span> <span class="n">freq</span><span class="p">[</span><span class="n">palavra</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">continue</span>
+                <span class="c1">#esse é o caso de uma palavra chave do álbum não ter nenhuma ocorrência na letra da música</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ocorrencias</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ocorrencias</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span> <span class="o">=</span> <span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">keys</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">vals</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Ocorrência do título nas letras das músicas&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequência&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<span class="c1"># o titulo de uma música é tema recorrente nas letras?</span>
+<div class="viewcode-block" id="titulo_musica_na_letra"><a class="viewcode-back" href="../pags/grupo_2.html#grupo_2.titulo_musica_na_letra">[docs]</a><span class="k">def</span> <span class="nf">titulo_musica_na_letra</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;A função plota um gráfico de barras que mostra o número de vezes que o título da música aparece na sua letra. Contabilizamos uma ocorrência para cada palavra-chave que está presente em uma música (palavra-chave seria uma palavra que não está na lista padrão das stopwords da biblioteca NLTK).</span>
+
+<span class="sd">    :param None:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">ocorrencias</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;musicas.json&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">all_musics</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">dicionario</span> <span class="ow">in</span> <span class="n">all_musics</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dicionario</span><span class="p">[</span><span class="s1">&#39;musica&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ocorrencias</span><span class="p">:</span>
+                <span class="n">ocorrencias</span><span class="p">[</span><span class="n">dicionario</span><span class="p">[</span><span class="s1">&#39;musica&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">titulo_list</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;\(.*?\)&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">dicionario</span><span class="p">[</span><span class="s1">&#39;musica&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&amp;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="n">stops</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">))</span>
+            <span class="n">filtered</span> <span class="o">=</span> <span class="p">[</span><span class="n">palavra</span> <span class="k">for</span> <span class="n">palavra</span> <span class="ow">in</span> <span class="n">titulo_list</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">palavra</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">stops</span><span class="p">]</span>
+            <span class="n">freq</span> <span class="o">=</span> <span class="n">count_freq</span><span class="p">([</span><span class="n">dicionario</span><span class="p">[</span><span class="s1">&#39;letra&#39;</span><span class="p">]])</span>
+            <span class="k">for</span> <span class="n">palavra</span> <span class="ow">in</span> <span class="n">filtered</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">ocorrencias</span><span class="p">[</span><span class="n">dicionario</span><span class="p">[</span><span class="s1">&#39;musica&#39;</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">freq</span><span class="p">[</span><span class="n">palavra</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                    <span class="c1">#esse é o caso de uma palavra chave da música não ter nenhuma ocorrência na letra da música</span>
+
+        <span class="n">custom_palette</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">posicao</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">ocorrencias</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">titulo</span><span class="p">,</span> <span class="n">frequencia</span> <span class="ow">in</span> <span class="n">ocorrencias</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">posicao</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">titulo</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">13</span><span class="p">:</span>
+                <span class="n">custom_palette</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;#FFC4C4&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">posicao</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">titulo</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">26</span><span class="p">:</span>
+                <span class="n">custom_palette</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;#EE6983&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">custom_palette</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;#850E35&#39;</span><span class="p">)</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ocorrencias</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ocorrencias</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span> <span class="o">=</span> <span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">keys</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">vals</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">custom_palette</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Ocorrência do título nas letras das músicas&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequência&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, João Victor Pereira Oliveira &amp; Rafael Felipe dos Santos.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

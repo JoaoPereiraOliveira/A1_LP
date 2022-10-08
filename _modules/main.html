@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>main &mdash; A1_LP - Bruno Mars 1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> A1_LP - Bruno Mars
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../pags/create_dataframe.html">create_dataframe module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/get_lyrics.html">get_lyrics module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/grupo_1_e_3.html">grupo_1_e_3 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/grupo_2.html">grupo_2 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pags/main.html">main module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">A1_LP - Bruno Mars</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      <li>main</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for main</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">grupo_1_e_3</span> <span class="k">as</span> <span class="nn">g13</span>
+<span class="kn">import</span> <span class="nn">grupo_2</span> <span class="k">as</span> <span class="nn">g2</span>
+
+
+<span class="k">global</span> <span class="n">df</span><span class="p">,</span> <span class="n">albuns</span>
+
+<span class="c1">#df = musics.create_dataframe()</span>
+
+<span class="c1">#diminui tempo de execução ao usar df vindo do csv</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;dataframe.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;\s*,\s*&#39;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;python&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;Albuns&#39;</span><span class="p">,</span> <span class="s1">&#39;Musics&#39;</span><span class="p">])</span>
+
+<span class="n">albuns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">levels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+
+
+<div class="viewcode-block" id="grupo_um"><a class="viewcode-back" href="../pags/main.html#main.grupo_um">[docs]</a><span class="k">def</span> <span class="nf">grupo_um</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Essa função foi criada para, ao ser chamada, responder todos os tópicos do grupo 1.</span>
+
+<span class="sd">    :param None:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># item i</span>
+    <span class="n">g13</span><span class="o">.</span><span class="n">plot_mais_e_menos_por_album</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;popularity&#39;</span><span class="p">)</span>
+
+    <span class="c1"># item ii</span>
+    <span class="n">g13</span><span class="o">.</span><span class="n">plot_mais_e_menos_por_album</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;duration (sec)&#39;</span><span class="p">)</span>
+
+    <span class="c1"># item iii</span>
+    <span class="n">g13</span><span class="o">.</span><span class="n">plot_mais_e_menos_geral</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;popularity&#39;</span><span class="p">)</span>
+
+    <span class="c1"># item iv</span>
+    <span class="n">g13</span><span class="o">.</span><span class="n">plot_mais_e_menos_geral</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;duration (sec)&#39;</span><span class="p">)</span>
+
+    <span class="c1"># item v</span>
+    <span class="n">g13</span><span class="o">.</span><span class="n">plot_premiados</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+    <span class="c1"># item vi</span>
+    <span class="n">g13</span><span class="o">.</span><span class="n">plot_correlacao</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;duration (sec)&#39;</span><span class="p">,</span> <span class="s1">&#39;popularity&#39;</span><span class="p">))</span></div>
+<span class="c1">#grupo_um()</span>
+
+
+<div class="viewcode-block" id="grupo_dois"><a class="viewcode-back" href="../pags/main.html#main.grupo_dois">[docs]</a><span class="k">def</span> <span class="nf">grupo_dois</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Essa função foi criada para, ao ser chamada, responder todos os tópicos do grupo 2.</span>
+
+<span class="sd">    :param None:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># item i</span>
+    <span class="n">g2</span><span class="o">.</span><span class="n">frequencia_dos_titulos_dos_albuns</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+    <span class="c1"># item ii</span>
+    <span class="n">g2</span><span class="o">.</span><span class="n">frequencia_dos_titulos_das_musicas</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+    <span class="c1"># item iii</span>
+    <span class="n">g2</span><span class="o">.</span><span class="n">palavras_comuns_albuns</span><span class="p">(</span><span class="n">albuns</span><span class="p">)</span>
+
+    <span class="c1"># item iv</span>
+    <span class="n">g2</span><span class="o">.</span><span class="n">palavras_comuns_discografia</span><span class="p">(</span><span class="n">albuns</span><span class="p">)</span>
+
+    <span class="c1"># item v</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">g2</span><span class="o">.</span><span class="n">titulo_albuns_nas_letras</span><span class="p">(</span><span class="n">albuns</span><span class="p">))</span>
+
+    <span class="c1"># item vi</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">g2</span><span class="o">.</span><span class="n">titulo_musica_na_letra</span><span class="p">())</span></div>
+<span class="c1">#grupo_dois()</span>
+
+<div class="viewcode-block" id="grupo_tres"><a class="viewcode-back" href="../pags/main.html#main.grupo_tres">[docs]</a><span class="k">def</span> <span class="nf">grupo_tres</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Essa função foi criada para, ao ser chamada, responder todos os tópicos do grupo 3.</span>
+
+<span class="sd">    :param None:</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="c1"># Há relação entre as colunas energy e loudness?</span>
+    <span class="n">g13</span><span class="o">.</span><span class="n">plot_correlacao</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;energy&#39;</span><span class="p">,</span> <span class="s1">&#39;loudness&#39;</span><span class="p">))</span>
+
+    <span class="c1"># Quais são os tons (baseados em Pitch class) mais frequentes nas músicas?</span>
+    <span class="n">g13</span><span class="o">.</span><span class="n">plot_tom_mais_frequente</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+    <span class="c1"># Quais são as músicas consideradas com maior &#39;danceability&#39; por álbum e em toda discografia?</span>
+    <span class="n">g13</span><span class="o">.</span><span class="n">plot_mais_e_menos_por_album</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;danceability&#39;</span><span class="p">)</span>
+    <span class="n">g13</span><span class="o">.</span><span class="n">plot_mais_e_menos_geral</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;danceability&#39;</span><span class="p">)</span></div>
+<span class="c1">#grupo_tres()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, João Victor Pereira Oliveira &amp; Rafael Felipe dos Santos.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
